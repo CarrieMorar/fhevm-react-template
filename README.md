@@ -7,7 +7,7 @@
 [![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 
-🎥 **[Video Demo]** | 🌐 **[Live Demo ](https://fhe-legal-consultation.vercel.app/)** | 📚 **[Documentation](#-documentation)**
+🎥 **[Video Demo demo.mp4]** | 🌐 **[Live Demo ](https://fhe-legal-consultation.vercel.app/)** | 📚 **[Documentation](#-documentation)**
 
 A universal, wagmi-like SDK for **Zama FHEVM** that makes building privacy-preserving dApps simple, consistent, and developer-friendly. Works with **React**, **Next.js**, **Vue**, **Node.js**, or any JavaScript environment.
 
