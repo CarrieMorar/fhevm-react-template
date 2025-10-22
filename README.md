@@ -7,7 +7,7 @@
 [![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 
-🎥 **[Video Demo](./demo.mp4)** | 🌐 **[Live Demo - Next.js](https://anonymous-legal-consultation.vercel.app/)** | 📚 **[Documentation](#-documentation)**
+🎥 **[Video Demo]** | 🌐 **[Live Demo ](https://fhe-legal-consultation.vercel.app/)** | 📚 **[Documentation](#-documentation)**
 
 A universal, wagmi-like SDK for **Zama FHEVM** that makes building privacy-preserving dApps simple, consistent, and developer-friendly. Works with **React**, **Next.js**, **Vue**, **Node.js**, or any JavaScript environment.
 
@@ -829,7 +829,7 @@ const value = await decrypt({ contractAddress, handle, signer });
 
 ## 📹 Video Demo
 
-**[Watch Full Demo Video](./demo.mp4)**
+**[Watch Full Demo Video]**
 
 **Video Contents:**
 - 00:00 - Project overview and architecture
@@ -886,7 +886,7 @@ const value = await decrypt({ contractAddress, handle, signer });
 - [x] **GitHub repo** - Forked from fhevm-react-template
 - [x] **Next.js example** - Fully functional with SDK
 - [x] **Video demo** - `demo.mp4`
-- [x] **Deployment link** - [https://anonymous-legal-consultation.vercel.app/](https://anonymous-legal-consultation.vercel.app/)
+- [x] **Deployment link** - [https://fhe-legal-consultation.vercel.app/](https://fhe-legal-consultation.vercel.app/)
 - [x] **README with links** - All resources documented
 
 ---
