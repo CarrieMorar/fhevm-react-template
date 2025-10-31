@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Legal Consultation Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>⚖️ Anonymous Legal Consultation</h1>
+                <p class="tagline">Secure, Private & Encrypted Legal Consultations on Blockchain</p>
+                <div class="wallet-section">
+                    <button id="connectWallet" class="btn btn-primary">🔗 Connect Wallet</button>
+                    <div id="walletInfo" class="wallet-info"></div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="client">📝 Submit Consultation</button>
+            <button class="nav-btn" data-section="view">👁️ View Consultation</button>
+            <button class="nav-btn" data-section="lawyer">⚖️ Lawyer Portal</button>
+            <button class="nav-btn" data-section="admin">🔧 Admin Panel</button>
+            <button class="nav-btn" data-section="stats">📊 Statistics</button>
+        </nav>
+
+        <main>
+            <!-- Client Section: Submit Consultation -->
+            <section id="client" class="section active">
+                <div class="section-header">
+                    <h2>📝 Submit Legal Consultation</h2>
+                    <p>Submit your encrypted legal question anonymously with FHE technology</p>
+                </div>
+
+                <form id="consultationForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientId">🆔 Anonymous Client ID (1-9999):</label>
+                            <input type="number" id="clientId" min="1" max="9999" placeholder="Enter your anonymous ID" required>
+                            <small>This ID keeps your identity private. Remember it to track consultations.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="categoryId">📚 Legal Category:</label>
+                            <select id="categoryId" required>
+                                <option value="">-- Select Category --</option>
+                                <option value="1">Civil Law</option>
+                                <option value="2">Criminal Law</option>
+                                <option value="3">Family Law</option>
+                                <option value="4">Corporate Law</option>
+                                <option value="5">Employment Law</option>
+                                <option value="6">Real Estate Law</option>
+                                <option value="7">Immigration Law</option>
+                                <option value="8">Tax Law</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="question">❓ Your Legal Question (Encrypted):</label>
+                        <textarea id="question" rows="8" placeholder="Describe your legal question in detail. This will be encrypted on-chain..." required></textarea>
+                        <small>Your question will be stored encrypted using FHE technology.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="consultationFee">💰 Consultation Fee (ETH):</label>
+                        <input type="number" id="consultationFee" step="0.001" min="0.001" placeholder="0.001" required>
+                        <small>Minimum fee: 0.001 ETH</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">🚀 Submit Consultation</button>
+                </form>
+            </section>
+
+            <!-- View Consultation Section -->
+            <section id="view" class="section">
+                <div class="section-header">
+                    <h2>👁️ View Consultation Details</h2>
+                    <p>Load and view your consultation status and responses</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="consultationId">Consultation ID:</label>
+                    <div class="input-group">
+                        <input type="number" id="consultationId" min="1" placeholder="Enter consultation ID">
+                        <button id="loadConsultation" class="btn btn-secondary">Load</button>
+                    </div>
+                </div>
+
+                <div id="consultationDetails" class="details-card"></div>
+            </section>
+
+            <!-- Lawyer Section -->
+            <section id="lawyer" class="section">
+                <div class="section-header">
+                    <h2>⚖️ Lawyer Portal</h2>
+                    <p>Register as a lawyer and provide legal responses</p>
+                </div>
+
+                <div class="info-card" id="lawyerStatusCard">
+                    <h3>👤 Your Lawyer Status</h3>
+                    <div id="lawyerStatus"></div>
+                </div>
+
+                <div class="lawyer-sections">
+                    <!-- Register Lawyer -->
+                    <div class="action-card">
+                        <h3>📋 Register as Lawyer</h3>
+                        <div class="form-group">
+                            <label for="lawyerSpecialty">Your Specialty:</label>
+                            <select id="lawyerSpecialty">
+                                <option value="">-- Select Specialty --</option>
+                                <option value="1">Civil Law</option>
+                                <option value="2">Criminal Law</option>
+                                <option value="3">Family Law</option>
+                                <option value="4">Corporate Law</option>
+                                <option value="5">Employment Law</option>
+                                <option value="6">Real Estate Law</option>
+                                <option value="7">Immigration Law</option>
+                                <option value="8">Tax Law</option>
+                            </select>
+                        </div>
+                        <button id="lawyerRegisterBtn" class="btn btn-primary">Register</button>
+                    </div>
+
+                    <!-- Provide Response -->
+                    <div class="action-card">
+                        <h3>💬 Provide Response</h3>
+                        <div class="form-group">
+                            <label for="responseConsultationId">Consultation ID:</label>
+                            <input type="number" id="responseConsultationId" min="1" placeholder="Enter consultation ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyerResponse">Your Legal Response (Encrypted):</label>
+                            <textarea id="lawyerResponse" rows="6" placeholder="Enter your professional legal response..."></textarea>
+                        </div>
+                        <button id="submitResponseBtn" class="btn btn-primary">Submit Response</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin" class="section">
+                <div class="section-header">
+                    <h2>🔧 Admin Control Panel</h2>
+                    <p>Administrative functions for platform management</p>
+                </div>
+
+                <div class="info-card admin-status-card">
+                    <h3>👤 Admin Status</h3>
+                    <div id="adminStatus"></div>
+                </div>
+
+                <div class="admin-grid">
+                    <!-- Assign Consultation -->
+                    <div class="action-card">
+                        <h3>📌 Assign Consultation</h3>
+                        <div class="form-group">
+                            <label>Consultation ID:</label>
+                            <input type="number" id="assignConsultationId" min="1" placeholder="Consultation ID">
+                        </div>
+                        <div class="form-group">
+                            <label>Lawyer ID:</label>
+                            <input type="number" id="assignLawyerId" min="1" placeholder="Lawyer ID">
+                        </div>
+                        <button id="assignConsultationBtn" class="btn btn-primary">Assign</button>
+                    </div>
+
+                    <!-- Verify Lawyer -->
+                    <div class="action-card">
+                        <h3>✅ Verify Lawyer</h3>
+                        <div class="form-group">
+                            <label>Lawyer ID:</label>
+                            <input type="number" id="verifyLawyerId" min="1" placeholder="Lawyer ID">
+                        </div>
+                        <button id="verifyLawyerBtn" class="btn btn-success">Verify</button>
+                    </div>
+
+                    <!-- Deactivate Lawyer -->
+                    <div class="action-card">
+                        <h3>🚫 Deactivate Lawyer</h3>
+                        <div class="form-group">
+                            <label>Lawyer ID:</label>
+                            <input type="number" id="deactivateLawyerId" min="1" placeholder="Lawyer ID">
+                        </div>
+                        <button id="deactivateLawyerBtn" class="btn btn-danger">Deactivate</button>
+                    </div>
+
+                    <!-- Update Rating -->
+                    <div class="action-card">
+                        <h3>⭐ Update Lawyer Rating</h3>
+                        <div class="form-group">
+                            <label>Lawyer ID:</label>
+                            <input type="number" id="ratingLawyerId" min="1" placeholder="Lawyer ID">
+                        </div>
+                        <div class="form-group">
+                            <label>New Rating (0-100):</label>
+                            <input type="number" id="newRating" min="0" max="100" placeholder="Rating">
+                        </div>
+                        <button id="updateRatingBtn" class="btn btn-primary">Update</button>
+                    </div>
+
+                    <!-- Withdraw Fees -->
+                    <div class="action-card">
+                        <h3>💸 Withdraw Fees</h3>
+                        <div class="form-group">
+                            <label>Amount (ETH):</label>
+                            <input type="number" id="withdrawAmount" step="0.001" min="0.001" placeholder="0.001">
+                        </div>
+                        <button id="withdrawFeesBtn" class="btn btn-success">Withdraw</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="stats" class="section">
+                <div class="section-header">
+                    <h2>📊 Platform Statistics</h2>
+                    <p>Real-time analytics and platform metrics</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-label">Total Consultations</div>
+                        <div class="stat-value" id="totalConsultations">-</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⚖️</div>
+                        <div class="stat-label">Total Lawyers</div>
+                        <div class="stat-value" id="totalLawyers">-</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-label">Verified Lawyers</div>
+                        <div class="stat-value" id="verifiedLawyers">-</div>
+                    </div>
+                </div>
+
+                <div class="client-stats-card">
+                    <h3>👤 Your Client Statistics</h3>
+                    <div id="clientStats"></div>
+                </div>
+
+                <div class="view-sections">
+                    <!-- View Lawyer Profile -->
+                    <div class="action-card">
+                        <h3>👨‍⚖️ View Lawyer Profile</h3>
+                        <div class="form-group">
+                            <label>Lawyer ID:</label>
+                            <input type="number" id="viewLawyerId" min="1" placeholder="Enter lawyer ID">
+                        </div>
+                        <button id="loadLawyerProfileBtn" class="btn btn-secondary">Load Profile</button>
+                        <div id="lawyerProfileDetails" class="details-card"></div>
+                    </div>
+
+                    <!-- View Client Stats -->
+                    <div class="action-card">
+                        <h3>📊 View Client Statistics</h3>
+                        <div class="form-group">
+                            <label>Client Address:</label>
+                            <input type="text" id="viewClientAddress" placeholder="0x...">
+                        </div>
+                        <button id="loadClientStatsBtn" class="btn btn-secondary">Load Stats</button>
+                        <div id="clientStatsDetails" class="details-card"></div>
+                    </div>
+                </div>
+
+                <button id="loadStatsBtn" class="btn btn-primary btn-large">🔄 Refresh Statistics</button>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>🔒 Powered by Zama FHE Technology | Fully Homomorphic Encryption</p>
+                <p>Contract: <span class="contract-address">0xBA9Daca2dEE126861963cd31752A9aCBc5488Df7</span></p>
+            </div>
+        </footer>
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

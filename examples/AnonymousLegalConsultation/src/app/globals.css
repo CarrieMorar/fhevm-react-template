@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #0ea5e9;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 py-6;
+}
+
+/* Status messages */
+.status {
+  @apply fixed bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg z-50 transition-all;
+}
+
+.status.success {
+  @apply bg-green-500 text-white;
+}
+
+.status.error {
+  @apply bg-red-500 text-white;
+}
+
+.status.info {
+  @apply bg-blue-500 text-white;
+}
+
+.status.warning {
+  @apply bg-yellow-500 text-white;
+}
+
+/* Form elements */
+.form-group {
+  @apply mb-4;
+}
+
+.form-group label {
+  @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all;
+}
+
+.form-group textarea {
+  @apply resize-vertical;
+}
+
+.form-group small {
+  @apply text-xs text-gray-500 mt-1 block;
+}
+
+/* Buttons */
+.btn {
+  @apply px-6 py-2 rounded-lg font-medium transition-all cursor-pointer inline-block text-center;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-primary-500 text-white hover:bg-primary-600;
+}
+
+.btn-secondary {
+  @apply bg-gray-500 text-white hover:bg-gray-600;
+}
+
+.btn-success {
+  @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white hover:bg-red-600;
+}
+
+.btn-large {
+  @apply px-8 py-3 text-lg;
+}
+
+/* Cards */
+.card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.section-header {
+  @apply mb-6;
+}
+
+.section-header h2 {
+  @apply text-2xl font-bold text-gray-900 mb-2;
+}
+
+.section-header p {
+  @apply text-gray-600;
+}
+
+/* Navigation */
+.navigation {
+  @apply flex gap-2 mb-6 overflow-x-auto pb-2;
+}
+
+.nav-btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap;
+  @apply bg-white text-gray-700 hover:bg-gray-100;
+}
+
+.nav-btn.active {
+  @apply bg-primary-500 text-white;
+}
+
+/* Stats grid */
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-4 mb-6;
+}
+
+.stat-card {
+  @apply bg-white rounded-lg shadow-md p-6 text-center;
+}
+
+.stat-icon {
+  @apply text-4xl mb-2;
+}
+
+.stat-label {
+  @apply text-sm text-gray-600 mb-1;
+}
+
+.stat-value {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+/* Admin grid */
+.admin-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.action-card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.action-card h3 {
+  @apply text-lg font-semibold text-gray-900 mb-4;
+}
+
+/* Details card */
+.details-card {
+  @apply bg-gray-50 rounded-lg p-4 mt-4;
+}
+
+/* Info card */
+.info-card {
+  @apply bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6;
+}
+
+.info-card h3 {
+  @apply text-lg font-semibold text-blue-900 mb-2;
+}
+
+/* Wallet info */
+.wallet-info {
+  @apply text-sm text-gray-600 mt-2;
+}

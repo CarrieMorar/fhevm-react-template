@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Legal Consultation Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Anonymous Legal Consultation Platform</h1>
+            <p>Secure, encrypted legal consultations using blockchain technology</p>
+            <div class="wallet-section">
+                <button id="connectWallet" class="btn btn-primary">Connect Wallet</button>
+                <div id="walletInfo" class="wallet-info"></div>
+            </div>
+
+            <div class="contract-config" id="contractConfig" style="display: none;">
+                <h3>⚠️ Contract Configuration Required</h3>
+                <p>Please enter the deployed contract address:</p>
+                <div class="config-form">
+                    <input type="text" id="contractAddressInput" placeholder="0x..." style="width: 400px; margin-right: 10px;">
+                    <button id="setContractAddress" class="btn btn-secondary">Set Address</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="submit">Submit Consultation</button>
+            <button class="nav-btn" data-section="lawyer">Lawyer Registration</button>
+            <button class="nav-btn" data-section="consultations">View Consultations</button>
+            <button class="nav-btn" data-section="admin">Admin Panel</button>
+            <button class="nav-btn" data-section="stats">Statistics</button>
+        </nav>
+
+        <main>
+            <!-- Submit Consultation Section -->
+            <section id="submit" class="section active">
+                <h2>Submit Anonymous Legal Consultation</h2>
+                <form id="consultationForm" class="form">
+                    <div class="form-group">
+                        <label for="clientId">Client ID (for privacy):</label>
+                        <input type="number" id="clientId" min="1" max="999999" required>
+                        <small>Use any number for anonymity</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Legal Category:</label>
+                        <select id="category" required>
+                            <option value="">Select a category</option>
+                            <option value="1">Civil Law</option>
+                            <option value="2">Criminal Law</option>
+                            <option value="3">Family Law</option>
+                            <option value="4">Corporate Law</option>
+                            <option value="5">Employment Law</option>
+                            <option value="6">Real Estate Law</option>
+                            <option value="7">Immigration Law</option>
+                            <option value="8">Tax Law</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="question">Your Legal Question (will be encrypted):</label>
+                        <textarea id="question" rows="6" required placeholder="Describe your legal question in detail..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fee">Consultation Fee (ETH):</label>
+                        <input type="number" id="fee" min="0.001" step="0.001" value="0.001" required>
+                        <small>Minimum: 0.001 ETH</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Consultation</button>
+                </form>
+            </section>
+
+            <!-- Lawyer Registration Section -->
+            <section id="lawyer" class="section">
+                <h2>Lawyer Registration</h2>
+                <form id="lawyerForm" class="form">
+                    <div class="form-group">
+                        <label for="specialty">Legal Specialty:</label>
+                        <select id="specialty" required>
+                            <option value="">Select your specialty</option>
+                            <option value="1">Civil Law</option>
+                            <option value="2">Criminal Law</option>
+                            <option value="3">Family Law</option>
+                            <option value="4">Corporate Law</option>
+                            <option value="5">Employment Law</option>
+                            <option value="6">Real Estate Law</option>
+                            <option value="7">Immigration Law</option>
+                            <option value="8">Tax Law</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Register as Lawyer</button>
+                </form>
+
+                <div id="lawyerStatus" class="status-info"></div>
+            </section>
+
+            <!-- View Consultations Section -->
+            <section id="consultations" class="section">
+                <h2>My Consultations</h2>
+                <div class="form-group">
+                    <label for="consultationId">Consultation ID:</label>
+                    <input type="number" id="consultationId" min="1">
+                    <button id="loadConsultation" class="btn btn-secondary">Load Consultation</button>
+                </div>
+
+                <div id="consultationDetails" class="consultation-details"></div>
+
+                <div id="lawyerResponse" class="lawyer-section">
+                    <h3>Provide Response (Lawyers Only)</h3>
+                    <textarea id="responseText" rows="6" placeholder="Enter your legal advice/response..."></textarea>
+                    <button id="submitResponse" class="btn btn-primary">Submit Response</button>
+                </div>
+            </section>
+
+            <!-- Admin Panel Section -->
+            <section id="admin" class="section">
+                <h2>Admin Panel</h2>
+                <div class="admin-actions">
+                    <div class="admin-card">
+                        <h3>Assign Consultation</h3>
+                        <input type="number" id="assignConsultationId" placeholder="Consultation ID" min="1">
+                        <input type="number" id="assignLawyerId" placeholder="Lawyer ID" min="1">
+                        <button id="assignConsultation" class="btn btn-primary">Assign</button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Verify Lawyer</h3>
+                        <input type="number" id="verifyLawyerId" placeholder="Lawyer ID" min="1">
+                        <button id="verifyLawyer" class="btn btn-primary">Verify</button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Update Rating</h3>
+                        <input type="number" id="ratingLawyerId" placeholder="Lawyer ID" min="1">
+                        <input type="number" id="newRating" placeholder="Rating (0-100)" min="0" max="100">
+                        <button id="updateRating" class="btn btn-primary">Update</button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Withdraw Fees</h3>
+                        <input type="number" id="withdrawAmount" placeholder="Amount (ETH)" min="0" step="0.001">
+                        <button id="withdrawFees" class="btn btn-primary">Withdraw</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="stats" class="section">
+                <h2>Platform Statistics</h2>
+                <div id="systemStats" class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Consultations</h3>
+                        <div class="stat-value" id="totalConsultations">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Lawyers</h3>
+                        <div class="stat-value" id="totalLawyers">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Verified Lawyers</h3>
+                        <div class="stat-value" id="verifiedLawyers">-</div>
+                    </div>
+                </div>
+
+                <div class="client-stats">
+                    <h3>Your Client Statistics</h3>
+                    <div id="clientStats"></div>
+                </div>
+
+                <button id="loadStats" class="btn btn-secondary">Refresh Statistics</button>
+            </section>
+        </main>
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
